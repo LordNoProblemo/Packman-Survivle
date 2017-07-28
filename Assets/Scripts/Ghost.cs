@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Ghost : MonoBehaviour {
 
-	public bool eat;
+
 	public GameManager Manager;
 	public GameObject Body;
 	public GameObject eatMode;
@@ -13,7 +13,7 @@ public class Ghost : MonoBehaviour {
 	public ulong step;
 	// Use this for initialization
 	void Start () {
-		eat = false;
+		
 		speed = Random.value * 0.03f + 0.07f;
 		Manager = GameObject.Find ("GameManager").GetComponent<GameManager> ();
 		eatMode.SetActive (false);
@@ -41,8 +41,8 @@ public class Ghost : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void FixedUpdate () {
-		Body.SetActive (!eat);
-		eatMode.SetActive (eat);
+		Body.SetActive (!Manager.eat);
+		eatMode.SetActive (Manager.eat);
 		if (!Manager.canMove ())
 			return;
 		if (infNorm () >= 5.1)
@@ -57,7 +57,7 @@ public class Ghost : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D col)
 	{
 		if (col.gameObject.tag == "Player") {
-			if (eat) {
+			if (Manager.eat) {
 				Manager.points += 100;
 				GameObject.Destroy (gameObject);
 			} else {

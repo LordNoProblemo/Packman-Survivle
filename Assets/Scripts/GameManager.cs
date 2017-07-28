@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour {
 	public float timer = 0;
 	private List<GameObject> PntObjs;
 	private int spawned;
+	public bool eat = false;
 	// Use this for initialization
 	void Start () {
 		started = false;

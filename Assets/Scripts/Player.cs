@@ -4,40 +4,91 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 	public float speed = 0.4f;
-	Vector2 dest = Vector2.zero;
+	public Vector2 dest = Vector2.zero;
 	public GameManager Manager;
-
+	public GameObject ghostBody;
+	bool isDirX = true;
 	void Start() {
 		dest = transform.position;
+
 	}
 
 	void FixedUpdate() {
-		if (!Manager.canMove ())
+		
+		if (!Manager.canMove () || Manager.playerFreeze)
 			return;
-		// Move closer to Destination
+		ghostBody.SetActive (Manager.ghostMode);
+		GetComponent<Collider2D> ().isTrigger = Manager.ghostMode;
+
+		Vector3 pos = transform.position;
+
 		Vector2 p = Vector2.MoveTowards(transform.position, dest, speed);
 		GetComponent<Rigidbody2D>().MovePosition(p);
-		//Debug.Log ((Vector2)transform.position);
-		// Check for Input if not moving
-		//if ((Vector2)transform.position == dest) {
-			if (Input.GetKey(KeyCode.UpArrow) )
-				dest = (Vector2)transform.position + Vector2.up;
-			if (Input.GetKey(KeyCode.RightArrow))
-				dest = (Vector2)transform.position + Vector2.right;
-			if (Input.GetKey(KeyCode.DownArrow) )
-				dest = (Vector2)transform.position - Vector2.up;
-			if (Input.GetKey(KeyCode.LeftArrow) )
-				dest = (Vector2)transform.position - Vector2.right;
+
+		if (Input.GetKey (KeyCode.UpArrow)) {
+			dest = (Vector2)transform.position + Vector2.up;
+			isDirX = false;
+			if(!ghostBody.GetComponent<SpriteRenderer> ().flipX)
+				ghostBody.transform.eulerAngles = new Vector3 (0, 0, -90);
+			else
+				ghostBody.transform.eulerAngles = new Vector3 (0, 0, 90);
+
+		
+		}
+		if (Input.GetKey (KeyCode.RightArrow)) {
+			dest = (Vector2)transform.position + Vector2.right;
+			isDirX = true;
+			//ghostBody.transform.rotation.eulerAngles = new Vector3 (0, 0, 0);
+			ghostBody.transform.eulerAngles = new Vector3 (0, 0, 0);
+			ghostBody.GetComponent<SpriteRenderer> ().flipX  = true;
+
+		}
+		if (Input.GetKey (KeyCode.DownArrow)) {
+			dest = (Vector2)transform.position - Vector2.up;
+			isDirX = false;
+			if(!ghostBody.GetComponent<SpriteRenderer> ().flipX)
+				ghostBody.transform.eulerAngles = new Vector3 (0, 0, 90);
+			else
+				ghostBody.transform.eulerAngles = new Vector3 (0, 0, -90);
+			//ghostBody.GetComponent<SpriteRenderer> ().flipX  = false;
+
+		}
+		if (Input.GetKey (KeyCode.LeftArrow)) {
+			dest = (Vector2)transform.position - Vector2.right;
+
+			isDirX = true;
+			ghostBody.transform.eulerAngles = new Vector3 (0, 0, 0);
+			//GetComponentInChildren<SpriteRenderer> ().flipX = false;
+			ghostBody.GetComponent<SpriteRenderer> ().flipX = false;
+		}
 		Vector2 dir = dest - (Vector2)transform.position;
 		GetComponent<Animator>().SetFloat("DirX", dir.x);
 		GetComponent<Animator> ().SetFloat ("DirY", dir.y);
 		//}
 	}
+	void OnTriggerEnter2D(Collider2D col)
+	{
+		Vector3 pos = transform.position;
+		if (col.gameObject.tag == "Wall" && Manager.ghostMode) {
+			if (isDirX) {
+				transform.position = new Vector3 (-pos.x, pos.y, -1);
+				if (pos.x > 0)
+					pos.x -= 0.1f;
+				else
+					pos.x += 0.1f;
+				dest = new Vector3 (-pos.x, pos.y, -1);
 
-	bool valid(Vector2 dir) {
-		// Cast Line from 'next to Pac-Man' to 'Pac-Man'
-		Vector2 pos = transform.position;
-		RaycastHit2D hit = Physics2D.Linecast(pos + dir, pos);
-		return (hit.collider == GetComponent<Collider2D>());
+			} else {
+				transform.position = new Vector3 (pos.x, -pos.y, -1);
+				if (pos.y > 0)
+					pos.y -= 0.1f;
+				else
+					pos.y += 0.1f;
+				dest = new Vector3 (pos.x, -pos.y, -1);
+			}
+			
+
+		}
 	}
+
 }

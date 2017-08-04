@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
@@ -11,6 +12,7 @@ public class GameManager : MonoBehaviour {
 	public int numOfEnemyPerSpawn;
 	public GameObject player;
 	private bool started,paused;
+	public bool playerFreeze = false, ghostFreeze = false;
 	public bool end;
 	public List<GameObject> powerUps;
 	public GameObject Point;
@@ -20,6 +22,8 @@ public class GameManager : MonoBehaviour {
 	private List<GameObject> PntObjs;
 	private int spawned;
 	public bool eat = false;
+	public bool ghostMode = false;
+
 	// Use this for initialization
 	void Start () {
 		started = false;
@@ -51,21 +55,22 @@ public class GameManager : MonoBehaviour {
 				paused = !paused;
 			}
 		} else {
-			status.text = "GAME ENDED!!!\n PRESS R TO RESTART";
+			status.text = "GAME ENDED!!!";
 			status.enabled = true;
 		}
 		if (started && Input.GetKeyDown (KeyCode.R)) {
-			Application.LoadLevel ("Game");
+			SceneManager.LoadScene ("Game");
+		}
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			SceneManager.LoadScene ("MainMenu");
 		}
 		if (canMove ()) {
 			timer += Time.deltaTime*100;
-
-		}
-		if (canMove ()) {
 			updateTimer ();
 			updatePoint ();
 			spawnPoint ();
 			spawnEnemy ();
+			SpawnPowerUp ();
 		}
 
 			
@@ -119,18 +124,28 @@ public class GameManager : MonoBehaviour {
 	}
 	void spawnEnemy()
 	{
+		if (ghostFreeze)
+			return;
 		if (timer - lEnemySpawn >= 100) {
 			uint n = (uint)Random.Range (1, numOfEnemyPerSpawn + 1);
 			for (uint i = 0; i < n; i++) {
 				int ID = Random.Range (0, enemy.Count);
 				Instantiate (enemy [ID]);
-				lEnemySpawn = timer;
+
 			}
+			lEnemySpawn = timer;
 			spawned++;
 		}
 		if (spawned == 30) {
 			spawned = 0;
 			numOfEnemyPerSpawn++;
+		}
+	}
+	void SpawnPowerUp()
+	{
+		if (timer - lPowerUpSpawn >= 1500) {
+			Instantiate (powerUps [Random.Range (0, powerUps.Count)]);
+			lPowerUpSpawn = timer;
 		}
 	}
 

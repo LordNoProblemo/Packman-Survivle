@@ -5,7 +5,7 @@ using UnityEngine;
 public class Ghost : MonoBehaviour {
 
 
-	public GameManager Manager;
+	public GameManager Manager = null;
 	public GameObject Body;
 	public GameObject eatMode;
 	public Vector3 dir;
@@ -17,7 +17,9 @@ public class Ghost : MonoBehaviour {
 	void Start () {
 		
 		speed = Random.value * 0.03f + 0.07f;
-		Manager = GameObject.Find ("GameManager").GetComponent<GameManager> ();
+		GameObject man = GameObject.Find ("GameManager");
+		if(man != null)
+			Manager = man.GetComponent<GameManager> ();
 		eatMode.SetActive (false);
 		Body.SetActive (true);
 		float p = Random.value;
@@ -35,16 +37,21 @@ public class Ghost : MonoBehaviour {
 		dir = dir - (Vector3)transform.position;
 		dir.Normalize ();
 		p = Random.value;
+		float z = 0;
 		if (p >= 0.99) {
 			transform.localScale = transform.localScale * 5;
 			eatPoints = 5;
+			z = -0.5f;
 		} else if (p >= 0.94) {
 			transform.localScale = transform.localScale * 3;
 			eatPoints = 3;
+			z = -0.4f;
 		} else if (p > 0.84) {
 			transform.localScale = transform.localScale * 2;
 			eatPoints = 2;
+			z = -0.3f;
 		}
+		transform.position = new Vector3 (x, y, z);
 
 	}
 	float infNorm()
@@ -56,10 +63,12 @@ public class Ghost : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		//GetComponent<Collider2D> ().isTrigger = Manager.ghostMode;
-		Body.SetActive (!Manager.eat);
-		eatMode.SetActive (Manager.eat);
-		if (!Manager.canMove () || Manager.ghostFreeze)
-			return;
+		if (Manager != null) {
+			Body.SetActive (!Manager.eat);
+			eatMode.SetActive (Manager.eat);
+			if (!Manager.canMove () || Manager.ghostFreeze)
+				return;
+		}
 		//GetComponent<Collider2D> ().isTrigger = (Manager.ghostMode && Manager.eat);
 		if (infNorm () >= 5.1)
 			GameObject.Destroy (gameObject);

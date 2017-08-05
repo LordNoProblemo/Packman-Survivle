@@ -5,7 +5,7 @@ using UnityEngine;
 public class Ghost : MonoBehaviour {
 
 
-	public GameManager Manager = null;
+	public AbstractManager Manager = null;
 	public GameObject Body;
 	public GameObject eatMode;
 	public Vector3 dir;
@@ -17,9 +17,9 @@ public class Ghost : MonoBehaviour {
 	void Start () {
 		
 		speed = Random.value * 0.03f + 0.07f;
-		GameObject man = GameObject.Find ("GameManager");
+		GameObject man = GameObject.FindGameObjectWithTag ("Manager");
 		if(man != null)
-			Manager = man.GetComponent<GameManager> ();
+			Manager = man.GetComponent<AbstractManager> ();
 		eatMode.SetActive (false);
 		Body.SetActive (true);
 		float p = Random.value;

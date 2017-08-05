@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Point : MonoBehaviour {
 
-	public GameManager Manager;
+	public AbstractManager Manager;
 	// Use this for initialization
 	void Start () {
-		Manager = GameObject.Find ("GameManager").GetComponent<GameManager>();
+		Manager = GameObject.FindGameObjectWithTag ("Manager").GetComponent<AbstractManager>();
 	}
 	
 	// Update is called once per frame

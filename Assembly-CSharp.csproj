@@ -46,6 +46,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\AbstractManager.cs" />
      <Compile Include="Assets\Scripts\BonusBlock.cs" />
      <Compile Include="Assets\Scripts\BonusBombBonus.cs" />
      <Compile Include="Assets\Scripts\ButtonHover.cs" />

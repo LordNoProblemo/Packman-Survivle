@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class EatBonus : MonoBehaviour {
 
-	private GameManager Manager;
+	private AbstractManager Manager;
 	public float timer;
 	public Text Status;
 	// Use this for initialization
@@ -22,7 +22,7 @@ public class EatBonus : MonoBehaviour {
 					return;
 				}
 		}
-		Manager = GameObject.Find ("GameManager").GetComponent<GameManager> ();
+		Manager = GameObject.FindGameObjectWithTag ("Manager").GetComponent<AbstractManager> ();
 		Manager.eat = true;
 		Timer ();
 	}

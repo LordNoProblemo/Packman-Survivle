@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GhostBonus : MonoBehaviour {
 	public Text stats;
-	public GameManager manager;
+	public AbstractManager manager;
 	public float timer;
 	// Use this for initialization
 	void Start () {
@@ -21,7 +21,7 @@ public class GhostBonus : MonoBehaviour {
 					return;
 				}
 		}
-		manager = GameObject.Find ("GameManager").GetComponent<GameManager> ();
+		manager = GameObject.FindGameObjectWithTag ("Manager").GetComponent<AbstractManager> ();
 
 		timer = 5 +Random.value * 5;
 		timer *= 100;

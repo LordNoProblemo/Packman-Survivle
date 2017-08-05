@@ -7,7 +7,7 @@ public class FreezeBonus : MonoBehaviour {
 
 
 	public Text stats;
-	public GameManager manager;
+	public AbstractManager manager;
 	public float timer;
 	private string who;
 	// Use this for initialization
@@ -24,7 +24,7 @@ public class FreezeBonus : MonoBehaviour {
 					return;
 				}
 		}
-		manager = GameObject.Find ("GameManager").GetComponent<GameManager> ();
+		manager = GameObject.FindGameObjectWithTag ("Manager").GetComponent<AbstractManager> ();
 		float p = Random.value;
 		if (p < 0.5) {
 			manager.ghostFreeze = true;

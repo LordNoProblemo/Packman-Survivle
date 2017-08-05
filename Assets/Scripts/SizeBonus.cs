@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class SizeBonus : MonoBehaviour {
 	private GameObject player;
 	public Text stats;
-	public GameManager manager;
+	public AbstractManager manager;
 	public float timer;
 	float scale = 1f;
 	// Use this for initialization
@@ -24,7 +24,7 @@ public class SizeBonus : MonoBehaviour {
 				}
 		}
 		player = GameObject.FindGameObjectWithTag ("Player");
-		manager = GameObject.Find ("GameManager").GetComponent<GameManager> ();
+		manager = GameObject.FindGameObjectWithTag ("Manager").GetComponent<AbstractManager> ();
 		float p = Random.value;
 		if (p < 0.5)
 			scale = 0.5f;

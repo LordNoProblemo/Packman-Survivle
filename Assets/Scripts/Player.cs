@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 	public float speed = 0.4f;
 	public Vector2 dest = Vector2.zero;
-	public GameManager Manager;
+	public AbstractManager Manager;
 	public GameObject ghostBody;
 	bool isDirX = true;
 	void Start() {

@@ -4,25 +4,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : AbstractManager {
 
-	public Text Timer, Points, status;
-	public uint points;
-	public float lEnemySpawn,lPowerUpSpawn;
-	public int numOfEnemyPerSpawn;
-	public GameObject player;
-	private bool started,paused;
-	public bool playerFreeze = false, ghostFreeze = false;
-	public bool end;
-	public List<GameObject> powerUps;
-	public GameObject Point;
-	public List<GameObject> enemy;
-	//public List<GameObject> enemyObs;
-	public float timer = 0;
-	private List<GameObject> PntObjs;
-	private int spawned;
-	public bool eat = false;
-	public bool ghostMode = false;
+
 
 	// Use this for initialization
 	void Start () {
@@ -43,7 +27,9 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			SceneManager.LoadScene ("MainMenu");
+		}
 		if (!started) {
 			if (Input.GetKey (KeyCode.Space)) {
 				started = true;
@@ -61,9 +47,7 @@ public class GameManager : MonoBehaviour {
 		if (started && Input.GetKeyDown (KeyCode.R)) {
 			SceneManager.LoadScene ("Game");
 		}
-		if (Input.GetKeyDown (KeyCode.Escape)) {
-			SceneManager.LoadScene ("MainMenu");
-		}
+
 		if (canMove ()) {
 			timer += Time.deltaTime*100;
 			updateTimer ();
@@ -76,77 +60,6 @@ public class GameManager : MonoBehaviour {
 			
 
 	}
-	public bool canMove()
-	{
-		//Debug.Log (started && !paused && !end);
-		return started && !paused && !end;
-	}
-	void updateTimer()
-	{
-		ulong x = (ulong)timer ;
-		ulong mSec = (x)%100;
-		x /= 100;
-		ulong Sec = x % 60;
-		ulong Min = x / 60;
-		string FTIME = "" + mSec;
-		if (FTIME.Length < 2)
-			FTIME = "0" + FTIME;
-		FTIME = Sec +":"+ FTIME;
-		if(FTIME.Length<5)
-			FTIME = "0" + FTIME;
-		FTIME = Min + ":" + FTIME;
-		if(FTIME.Length < 8)
-			FTIME = "0" + FTIME;
-		Timer.text = "TIMER:\n" +FTIME;
-	}
-	void updatePoint()
-	{
-		Points.text = "POINTS:\n" + points;
-	}
-	void spawnPoint()
-	{
-		GameObject newP;
-		if ( PntObjs == null) {
-			float x = Random.value * 9 - 4.5f;
-			float y = Random.value * 9 - 4.5f;
-			newP = (GameObject)Instantiate (Point);
-			newP.transform.position = new Vector3 (x, y, 0);
-			PntObjs = new List<GameObject> ();
-			PntObjs.Add (newP);
-			return;
-		} else if ((uint)Mathf.Sqrt(points/3 +1) > PntObjs.Count) {
-			float x = Random.value * 9 - 4.5f;
-			float y = Random.value * 9 - 4.5f;
-			newP = (GameObject)Instantiate (Point);
-			newP.transform.position = new Vector3 (x, y, 0);
-			PntObjs.Add (newP);
-		}
-	}
-	void spawnEnemy()
-	{
-		if (ghostFreeze)
-			return;
-		if (timer - lEnemySpawn >= 100) {
-			uint n = (uint)Random.Range (1, numOfEnemyPerSpawn + 1);
-			for (uint i = 0; i < n; i++) {
-				int ID = Random.Range (0, enemy.Count);
-				Instantiate (enemy [ID]);
 
-			}
-			lEnemySpawn = timer;
-			spawned++;
-		}
-		if (spawned == 30) {
-			spawned = 0;
-			numOfEnemyPerSpawn++;
-		}
-	}
-	void SpawnPowerUp()
-	{
-		if (timer - lPowerUpSpawn >= 1500) {
-			Instantiate (powerUps [Random.Range (0, powerUps.Count)]);
-			lPowerUpSpawn = timer;
-		}
-	}
 
 }

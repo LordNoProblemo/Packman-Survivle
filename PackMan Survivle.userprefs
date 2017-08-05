@@ -1,9 +1,9 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\MenuManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameManager.cs">
     <Files>
       <File FileName="Assets\Scripts\Player.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\GameManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GameManager.cs" Line="32" Column="4" />
       <File FileName="Assets\Scripts\Point.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Ghost.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Power.cs" Line="1" Column="1" />
@@ -14,10 +14,11 @@
       <File FileName="Assets\Scripts\GhostBonus.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\TeleportBonus.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\BonusBombBonus.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\MenuAnimation.cs" Line="12" Column="9" />
-      <File FileName="Assets\Scripts\UIanimation.cs" Line="16" Column="42" />
-      <File FileName="Assets\Scripts\ButtonHover.cs" Line="22" Column="9" />
-      <File FileName="Assets\Scripts\MenuManager.cs" Line="21" Column="9" />
+      <File FileName="Assets\Scripts\MenuAnimation.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\UIanimation.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\ButtonHover.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\AbstractManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\MenuManager.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

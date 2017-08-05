@@ -48,17 +48,20 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\BonusBlock.cs" />
      <Compile Include="Assets\Scripts\BonusBombBonus.cs" />
+     <Compile Include="Assets\Scripts\ButtonHover.cs" />
      <Compile Include="Assets\Scripts\EatBonus.cs" />
      <Compile Include="Assets\Scripts\FreezeBonus.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\Ghost.cs" />
      <Compile Include="Assets\Scripts\GhostBonus.cs" />
      <Compile Include="Assets\Scripts\MenuAnimation.cs" />
+     <Compile Include="Assets\Scripts\MenuManager.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\Point.cs" />
      <Compile Include="Assets\Scripts\Power.cs" />
      <Compile Include="Assets\Scripts\SizeBonus.cs" />
      <Compile Include="Assets\Scripts\TeleportBonus.cs" />
+     <Compile Include="Assets\Scripts\UIanimation.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

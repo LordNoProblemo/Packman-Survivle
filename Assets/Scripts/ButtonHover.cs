@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ButtonHover : MonoBehaviour, IPointerEnterHandler,IPointerExitHandler {
+public class ButtonHover : MonoBehaviour, IPointerEnterHandler,IPointerExitHandler,IPointerClickHandler {
 
 	public GameObject animator;
+	public bool click = false;
 	// Use this for initialization
 	void Start () {
 		animator.SetActive (false);
@@ -22,6 +23,11 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler,IPointerExitHandl
 	public void OnPointerExit(PointerEventData p)
 	{
 		animator.SetActive (false);
+	}
+	public void OnPointerClick(PointerEventData p)
+	{
+		if(click)
+			animator.SetActive (false);
 	}
 
 }

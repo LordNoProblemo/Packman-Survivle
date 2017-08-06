@@ -14,7 +14,8 @@ public class MenuAnimation : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		timer += Time.deltaTime;
+		if(ghosts.Count > 0)
+			timer += Time.deltaTime;
 		pacTimer += Time.deltaTime;
 		if (pacTimer >= 0.1) {
 			i++;

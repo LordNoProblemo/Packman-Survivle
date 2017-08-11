@@ -95,4 +95,8 @@ public abstract class AbstractManager : MonoBehaviour {
 			lPowerUpSpawn = timer;
 		}
 	}
+    public void reset(string SceneName)
+    {
+        SceneManager.LoadScene(SceneName);
+    }
 }

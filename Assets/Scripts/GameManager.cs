@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GameManager : AbstractManager {
 
-
+    public GameObject Reset, saveScore;
 
 	// Use this for initialization
 	void Start () {
@@ -19,7 +19,8 @@ public class GameManager : AbstractManager {
 		Timer.text = "TIMER:\n00:00:00";
 		Points.text = "POINTS:\n0";
 		status.text = "To start the game,\npress on Space";
-
+        Reset.SetActive(false);
+        saveScore.SetActive(false);
 		lEnemySpawn = 0;
 		lPowerUpSpawn = 0;	
 
@@ -43,6 +44,8 @@ public class GameManager : AbstractManager {
 		} else {
 			status.text = "GAME ENDED!!!";
 			status.enabled = true;
+            saveScore.SetActive(true);
+            Reset.SetActive(true);
 		}
 		if (started && Input.GetKeyDown (KeyCode.R)) {
 			SceneManager.LoadScene ("Game");

@@ -10,20 +10,23 @@ public class FreezeBonus : MonoBehaviour {
 	public AbstractManager manager;
 	public float timer;
 	private string who;
+    public bool main;
 	// Use this for initialization
 	void Start () {
+        main = false;
 		GameObject[] temp = GameObject.FindGameObjectsWithTag(gameObject.tag);
 		timer = Random.value * 5 + 5;
 		timer *= 100;
 		if(temp.Length > 1)
 		{
 			for(uint i = 0; i < temp.Length; i++)
-				if (temp[i] != null && !temp[i].Equals(gameObject)) {
+				if (temp[i] != null && temp[i].GetComponent<FreezeBonus>() != null && temp[i].GetComponent<FreezeBonus>() .main && !temp[i].Equals(gameObject)) {
 					temp[i].GetComponent<FreezeBonus> ().timer += 100* 2.5f/*Might Change*/;
 					GameObject.Destroy (gameObject);
 					return;
 				}
 		}
+        main = true;
 		manager = GameObject.FindGameObjectWithTag ("Manager").GetComponent<AbstractManager> ();
 		float p = Random.value;
 		if (p < 0.5) {
@@ -40,8 +43,10 @@ public class FreezeBonus : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
-		if (!manager.canMove ())
+	void FixedUpdate () {
+        if (manager == null)
+            return;
+        if (!manager.canMove ())
 			return;
 		Timer ();
 

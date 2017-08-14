@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class GameManager : AbstractManager {
 
     public GameObject Reset, saveScore;
-
+    public GameObject endAudio;
 	// Use this for initialization
 	void Start () {
 		started = false;
@@ -46,6 +46,7 @@ public class GameManager : AbstractManager {
 			status.enabled = true;
             saveScore.SetActive(true);
             Reset.SetActive(true);
+            endAudio.SetActive(true);
 		}
 		if (started && Input.GetKeyDown (KeyCode.R)) {
 			SceneManager.LoadScene ("Game");

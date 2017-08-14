@@ -8,20 +8,26 @@ public class EatBonus : MonoBehaviour {
 	private AbstractManager Manager;
 	public float timer;
 	public Text Status;
+    public bool main;
+    public GameObject Audio;
 	// Use this for initialization
 	void Start () {
+        Audio.SetActive(false);
+        main = false;
 		GameObject[] temp = GameObject.FindGameObjectsWithTag(gameObject.tag);
 		timer = Random.value * 5 + 5;
 		timer *= 100;
 		if(temp.Length > 1)
 		{
 			for(uint i = 0; i < temp.Length; i++)
-				if (temp[i] != null && !temp[i].Equals(gameObject)) {
+				if (temp[i] != null && temp[i].GetComponent<EatBonus>() != null && temp[i].GetComponent<EatBonus>() .main && !temp[i].Equals(gameObject)) {
 					temp[i].GetComponent<EatBonus> ().timer += 100* 2.5f/*Might Change*/;
 					GameObject.Destroy (gameObject);
 					return;
 				}
 		}
+        Audio.SetActive(true);
+        main = true;
 		Manager = GameObject.FindGameObjectWithTag ("Manager").GetComponent<AbstractManager> ();
 		Manager.eat = true;
 		Timer ();
@@ -29,7 +35,9 @@ public class EatBonus : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		if (!Manager.canMove ()) {
+        if (Manager == null)
+            return;
+        if (!Manager.canMove ()) {
 			return;
 		}
 		Timer ();

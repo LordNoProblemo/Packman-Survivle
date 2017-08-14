@@ -7,31 +7,38 @@ public class GhostBonus : MonoBehaviour {
 	public Text stats;
 	public AbstractManager manager;
 	public float timer;
+    public GameObject Audio;
+    public bool main;
 	// Use this for initialization
 	void Start () {
+        main = false;
+        Audio.SetActive(false);
 		GameObject[] temp = GameObject.FindGameObjectsWithTag(gameObject.tag);
 		timer = Random.value * 5 + 5;
 		timer *= 100;
 		if(temp.Length > 1)
 		{
 			for(uint i = 0; i < temp.Length; i++)
-				if (temp[i] != null && !temp[i].Equals(gameObject)) {
-					temp[i].GetComponent<FreezeBonus> ().timer += 100* 2.5f/*Might Change*/;
+				if (temp[i] != null && temp[i].GetComponent<GhostBonus>() !=null && temp[i].GetComponent<GhostBonus>().main && !temp[i].Equals(gameObject)) {
+					temp[i].GetComponent<GhostBonus> ().timer += 100* 2.5f/*Might Change*/;
 					GameObject.Destroy (gameObject);
 					return;
 				}
 		}
+        main = true;
 		manager = GameObject.FindGameObjectWithTag ("Manager").GetComponent<AbstractManager> ();
-
-		timer = 5 +Random.value * 5;
+        Audio.SetActive(true);
+        timer = 5 +Random.value * 5;
 		timer *= 100;
 		Timer ();
 		manager.ghostMode = true;
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		if (!manager.canMove ())
+	void FixedUpdate () {
+        if (manager == null)
+            return;
+        if (!manager.canMove ())
 			return;
 		Timer ();
 

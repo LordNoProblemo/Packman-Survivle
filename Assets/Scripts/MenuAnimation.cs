@@ -7,9 +7,14 @@ public class MenuAnimation : MonoBehaviour {
 	public List<GameObject> ghosts;
 	private float timer = 0,pacTimer = 0;
 	public static int i = 0;
+    static bool start = true;
+    public GameObject sound;
 	// Use this for initialization
 	void Start () {
 		i = 0;
+        if (sound != null)
+            sound.SetActive(start);
+        start = false;
 	}
 	
 	// Update is called once per frame

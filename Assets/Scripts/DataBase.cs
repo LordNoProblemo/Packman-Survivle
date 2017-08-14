@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DataBase  {
 
-	private class playerStats
+	public class playerStats
     {
         private string name;
         private float time;
@@ -158,5 +158,20 @@ public class DataBase  {
         }
         return ret;
     }
-
+    public bool RemovePlayer(int i)
+    {
+        if (i < 0 || i >= end)
+            return false;
+        end--;
+        for (int j = i; j < end; j++)
+            bestest[j] = bestest[j + 1];
+        bestest[end] = null;
+        return true;
+    }
+    public playerStats get(int i )
+    {
+        if (i >= 0 && i < end)
+            return bestest[i];
+        return null;
+    }
 }

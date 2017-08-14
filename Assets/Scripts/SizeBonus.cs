@@ -9,20 +9,30 @@ public class SizeBonus : MonoBehaviour {
 	public AbstractManager manager;
 	public float timer;
 	float scale = 1f;
+    public bool main;
+    public GameObject growAud, shrinAud;
+    bool close;
 	// Use this for initialization
 	void Start () {
+        close = false;
+        growAud.SetActive(false);
+        shrinAud.SetActive(false);
 		GameObject[] temp = GameObject.FindGameObjectsWithTag(gameObject.tag);
 		timer = Random.value * 5 + 5;
 		timer *= 100;
-		if(temp.Length > 1)
-		{
-			for(uint i = 0; i < temp.Length; i++)
-				if (temp[i] != null && !temp[i].Equals(gameObject)) {
-					temp[i].GetComponent<SizeBonus> ().timer += 100* 2.5f/*Might Change*/;
-					GameObject.Destroy (gameObject);
-					return;
-				}
-		}
+        main = false;
+        if (temp.Length > 1)
+        {
+            for (uint i = 0; i < temp.Length; i++)
+                if (temp[i] != null  && temp[i].GetComponent<SizeBonus>() != null && temp[i].GetComponent<SizeBonus>().main && !temp[i].Equals(gameObject))
+                {
+                    temp[i].GetComponent<SizeBonus>().timer += 100 * 2.5f/*Might Change*/;
+                    GameObject.Destroy(gameObject);
+                    return;
+                }
+        }
+        else
+            main = true;
 		player = GameObject.FindGameObjectWithTag ("Player");
 		manager = GameObject.FindGameObjectWithTag ("Manager").GetComponent<AbstractManager> ();
 		float p = Random.value;
@@ -35,13 +45,19 @@ public class SizeBonus : MonoBehaviour {
 		timer = 5 ;
 		if (p < 0.99)
 			timer += Random.value * 5;
+        if (p < 0.5)
+            shrinAud.SetActive(true);
+        else
+            growAud.SetActive(true);
 		timer *= 100;
 		player.gameObject.transform.localScale *= scale;
 		Timer ();
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
+        if (manager == null)
+            return;
 		if (!manager.canMove ())
 			return;
 		Timer ();
@@ -52,7 +68,16 @@ public class SizeBonus : MonoBehaviour {
 				timer = 0;
 			return;
 		}
-		player.transform.localScale /= scale;
+        if (!close)
+        {
+            player.transform.localScale /= scale;
+            growAud.SetActive(!growAud.activeSelf);
+            shrinAud.SetActive(!shrinAud.activeSelf);
+            timer = 150;
+            stats.gameObject.SetActive(false);
+            close = true;
+            return;
+        }
 		GameObject.Destroy (gameObject);
 	}
 	void Timer()

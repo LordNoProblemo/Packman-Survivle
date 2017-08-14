@@ -8,13 +8,14 @@ public class Player : MonoBehaviour {
 	public AbstractManager Manager;
 	public GameObject ghostBody;
 	bool isDirX = true;
+    public GameObject pacsound;
 	void Start() {
 		dest = transform.position;
 
 	}
 
 	void FixedUpdate() {
-		
+        pacsound.SetActive(Manager.canMove() && !Manager.eat && !Manager.ghostMode && !Manager.playerFreeze);
 		if (!Manager.canMove () || Manager.playerFreeze)
 			return;
 		ghostBody.SetActive (Manager.ghostMode);

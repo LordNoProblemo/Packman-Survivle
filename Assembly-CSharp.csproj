@@ -56,6 +56,7 @@
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\Ghost.cs" />
      <Compile Include="Assets\Scripts\GhostBonus.cs" />
+     <Compile Include="Assets\Scripts\HighScoreBoard.cs" />
      <Compile Include="Assets\Scripts\HighScoresManager.cs" />
      <Compile Include="Assets\Scripts\MenuAnimation.cs" />
      <Compile Include="Assets\Scripts\MenuManager.cs" />

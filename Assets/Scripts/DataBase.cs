@@ -27,11 +27,17 @@ public class DataBase  {
         {
             return time;
         }
-        public bool better(playerStats p2)
+        public bool better(playerStats p2,bool timePriority)
         {
-            if (time < p2.time)
+            if (timePriority)
+            {
+                if (time < p2.time)
+                    return false;
+                return (time > p2.time) || (points >= p2.points);
+            }
+            if (points < p2.points)
                 return false;
-            return (time > p2.time) || (points >= p2.points);
+            return (points > p2.points) || (time >= p2.time);
         }
         private string encode(char c)
         {
@@ -111,13 +117,13 @@ public class DataBase  {
             end++;
         }
     }
-    public int addPlayer(string name,float time,uint points)
+    public int addPlayer(string name,float time,uint points, bool timePriority)
     {
         playerStats add = new playerStats(name, time, points);
         int i = 0;
         for(; i < end; i++)
         {
-            if (add.better(bestest[i]))
+            if (add.better(bestest[i],timePriority))
                 break;
         }
         if(i == end)

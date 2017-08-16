@@ -10,6 +10,7 @@ public class HighScoresManager : MonoBehaviour {
     public Text scoreBoard;
     public AbstractManager manager;
     public Button openButton;
+    public bool timePriority;
    
 	// Use this for initialization
 	void Start () {
@@ -28,7 +29,7 @@ public class HighScoresManager : MonoBehaviour {
     {
         uint points = manager.points;
         float time = manager.timer;
-        int score = db.addPlayer(name.text, time, points);
+        int score = db.addPlayer(name.text, time, points, timePriority);
         scoreBoard.gameObject.SetActive(true);
         switch (score)
         {
